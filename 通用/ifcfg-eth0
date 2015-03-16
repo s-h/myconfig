@@ -1,0 +1,7 @@
+# Intel Corporation 80003ES2LAN Gigabit Ethernet Controller (Copper)
+DEVICE=eth0
+BOOTPROTO=static
+HWADDR=00:30:48:FB:A4:B4
+ONBOOT=yes
+IPADDR=xx.xx.xx.xx
+NETMASK=255.255.255.0
