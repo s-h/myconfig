@@ -1,0 +1,25 @@
+set nobackup  "不备份
+set cursorline "当前行高亮
+set nu
+map // :%s/
+colorscheme desert
+
+let mapleader = '\' "关于NERD_commenter快速注释插件按键定义
+let g:mapleader = '\'
+
+let g:vimrc_author='sh' "authorinfo版本信息的定义
+let g:vimrc_email='apache3@foxmail.com'
+let g:vimrc_homepage='blog.jiangpeiran.com'
+nmap <F4> :AuthorInfoDetect<cr>
+
+set fileencodings=utf-8,gbk,cp936,gb18030,big5,euc-jp,euc-kr,latin1,ucs-bom,ucs
+set fencs=utf-8,gbk,cp936,gb18030,gb2312,ucs-bom
+"set enc=utf-8
+"set fenc=utf-8
+"无论所打开文件是否为utf-8编码，保存时都会强制保存为utf-8格式
+set cindent  "自动对齐
+set shiftwidth=4 
+set tabstop=4 "让一个tab等于4个空格
+set expandtab
+set hlsearch "高亮显示结果
+set incsearch "在输入要搜索的文字时，vim会实时匹配
