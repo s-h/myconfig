@@ -1,25 +1,85 @@
 set nobackup  "不备份
-set cursorline "当前行高亮
+"set cursorline "当前行高亮
 set nu
 map // :%s/
-colorscheme desert
+map ?? :Ici 
+noremap ;; :%s:::g<Left><Left><Left> 
+noremap ;' :%s:::cg<Left><Left><Left><Left> 
+"colorscheme desert "配色方案
 
-let mapleader = '\' "关于NERD_commenter快速注释插件按键定义
-let g:mapleader = '\'
-
-let g:vimrc_author='sh' "authorinfo版本信息的定义
-let g:vimrc_email='apache3@foxmail.com'
-let g:vimrc_homepage='blog.jiangpeiran.com'
-nmap <F4> :AuthorInfoDetect<cr>
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+" :sv 纵向打开一个文件
+" :vs 横向打开一个文件
 
 set fileencodings=utf-8,gbk,cp936,gb18030,big5,euc-jp,euc-kr,latin1,ucs-bom,ucs
 set fencs=utf-8,gbk,cp936,gb18030,gb2312,ucs-bom
 "set enc=utf-8
-"set fenc=utf-8
-"无论所打开文件是否为utf-8编码，保存时都会强制保存为utf-8格式
-set cindent  "自动对齐
+set fenc=utf-8 "无论所打开文件是否为utf-8编码，保存时都会强制保存为utf-8格式
+"set cindent  "自动对齐
+
 set shiftwidth=4 
 set tabstop=4 "让一个tab等于4个空格
 set expandtab
 set hlsearch "高亮显示结果
 set incsearch "在输入要搜索的文字时，vim会实时匹配
+
+set foldmethod=indent
+set foldlevel=99
+ 
+" press space to fold/unfold code
+nnoremap <space> za
+vnoremap <space> zf
+                                
+set laststatus=2 " Always display the statusline in all windows
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+
+hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white 
+
+" vundle
+set nocompatible              " be iMproved, required
+"filetype off                  " required
+set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/*
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'kevinw/pyflakes-vim'
+filetype plugin indent on
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+" nerdtree
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+let NERDTreeWinPos='right'
+let NERDTreeWinSize=30
+map <F2> :NERDTreeToggle<CR>
+Bundle 'bling/vim-airline'
+set laststatus=2
+Plugin 'kien/ctrlp.vim'
+"超级搜索 ctrl + p
+Plugin 'jnurmine/Zenburn' "配色
+Plugin 'altercation/vim-colors-solarized' "配色
+if has('gui_running')
+    set background=dark
+    colorscheme solarized
+else
+    colorscheme zenburn
+endif
+"Bundle 'Valloric/YouCompleteMe' 
+Bundle 'scrooloose/nerdcommenter'
+"快捷键 \cc 注释
+"       \cu 取消注释
+let mapleader = '\' "关于NERD_commenter快速注释插件按键定义 
+let g:mapleader = '\'
