@@ -3,13 +3,13 @@ set nobackup  "不备份
 set nu
 
 "替换快捷
-map // :%s/
+noremap // :%s/
 
 "排序快捷
-map /p :sort r /
+noremap /p :sort r /
 
-map ?? :Ici 
-map <F10> :w !sudo tee %
+noremap ?? :Ici 
+noremap <F10> :w !sudo tee %
 noremap ;; :%s:::g<Left><Left><Left> 
 noremap ;' :%s:::cg<Left><Left><Left><Left> 
 noremap <F6> :%s:\(\(\(\d\)\{1,3}\.\)\{3}\(\d\)\{1,3}\):ip route \1 255.255.255.255 10.15.245.45:g<Left><Left>
