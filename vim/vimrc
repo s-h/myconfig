@@ -1,6 +1,8 @@
 set nobackup  "不备份
 "set cursorline "当前行高亮
 set nu
+let mapleader = '\' 
+let g:mapleader = '\'
 
 "替换快捷
 noremap // :%s/
@@ -9,16 +11,20 @@ noremap // :%s/
 noremap /p :sort r /
 
 noremap ?? :Ici 
-noremap <F10> :w !sudo tee %
-noremap ;; :%s:::g<Left><Left><Left> 
-noremap ;' :%s:::cg<Left><Left><Left><Left> 
-noremap <F6> :%s:\(\(\(\d\)\{1,3}\.\)\{3}\(\d\)\{1,3}\):ip route \1 255.255.255.255 10.15.245.45:g<Left><Left>
-noremap <F7> :%s:\(\(\(\d\)\{1,3}\.\)\{3}\(\d\)\{1,3}\):set routing-options static route \1/32 next-hop 10.40.0.206:g<Left><Left>
+noremap <F10> :w !sudo tee %<cr>
+noremap ;; :%s:::g<Left><Left><Left>
+noremap ;' :%s:::cg<Left><Left><Left><Left>
+
+"ip-->cisco ip-->junper
+noremap <F6> :%s:\v(((\d){1,3}\.){3}(\d){1,3}):ip route \1 255.255.255.255 10.15.245.45:g<left><left>
+noremap <F7> :%s:\v(((\d){1,3}\.){3}(\d){1,3}):set routing-options static route \1/32 next-hop 10.40.0.206:g<Left><Left>
+
 "打开vimrc                          
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>                           
                           
 "重读vimrc                                   
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
 "colorscheme desert "配色方案
 
 "split navigations
@@ -28,6 +34,17 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 " :sv 纵向打开一个文件
 " :vs 横向打开一个文件
+
+"当前单词增加""
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+"引号将你 高亮选中 的文本包裹
+vnoremap <leader>" <esc><esc>`<i"<esc>`>a"
+
+"jk代替<esc>
+inoremap jk <esc>
+
+"缩写
+iabbrev @@ apache3@foxmail.com
 
 set fileencodings=utf-8,gbk,cp936,gb18030,big5,euc-jp,euc-kr,latin1,ucs-bom,ucs
 set fencs=utf-8,gbk,cp936,gb18030,gb2312,ucs-bom
@@ -97,8 +114,6 @@ Plugin 'altercation/vim-colors-solarized' "配色
 Bundle 'scrooloose/nerdcommenter'
     "快捷键 \cc 注释
     "       \cu 取消注释
-    let mapleader = '\' "关于NERD_commenter快速注释插件按键定义 
-    let g:mapleader = '\'
 Plugin 'othree/xml.vim' "xml/html标签自动闭合
 Plugin 'Shougo/neocomplcache.vim' "自动补全
     "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
