@@ -1,16 +1,16 @@
 set nobackup  "不备份
 "set cursorline "当前行高亮
 set nu
+nnoremap <leader>N :setlocal number!<cr>
 let mapleader = '\' 
 let g:mapleader = '\'
 
 "替换快捷
-noremap // :%s/
+noremap // :%s/\v
 
 "排序快捷
-noremap /p :sort r /
+noremap <leader>s :sort r /
 
-noremap ?? :Ici 
 noremap <F10> :w !sudo tee %<cr>
 noremap ;; :%s:::g<Left><Left><Left>
 noremap ;' :%s:::cg<Left><Left><Left><Left>
@@ -69,6 +69,20 @@ set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 
 hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white 
+
+"词典
+function! Mydict()
+    let expl=system('sdcv -n ' . 
+                \ expand("<cword>"))
+    windo if
+                \ expand("%") == "diCt-tmp"|
+                \ q!|endif
+    25vsp diCt-tmp
+    setlocal buftype=nofile bufhidden=hide noswapfile
+    1s/^/\=expl/
+    1
+endfunction
+nnoremap F :call Mydict()<cr>
 
 " vundle
 set nocompatible              " be iMproved, required
