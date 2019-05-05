@@ -1,0 +1,317 @@
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set nobackup  "不备份
+"set cursorline "当前行高亮
+set nu
+nnoremap <leader>N :setlocal number!<cr>
+let mapleader = '\' 
+let g:mapleader = '\'
+
+"替换快捷
+noremap // :%s/\v
+
+"排序快捷
+noremap <leader>s :sort r /
+
+noremap <F10> :w !sudo tee %<cr>
+noremap ;; :%s:::g<Left><Left><Left>
+noremap ;' :%s:::cg<Left><Left><Left><Left>
+
+"ip-->cisco ip-->junper
+noremap <F6> :%s:\v(((\d){1,3}\.){3}(\d){1,3}):ip route \1 255.255.255.255 10.15.245.45:g<left><left>
+noremap <F7> :%s:\v(((\d){1,3}\.){3}(\d){1,3}):set routing-options static route \1/32 next-hop 10.40.0.206:g<Left><Left>
+noremap <F9> :%s/\v(.*)/\r<field id="\1" xsi:type="AttributeString">\r\t<sql>\1<\/sql>\r\t<default_value\/>\r\t<is_null_allowed>true<\/is_null_allowed>\r<\/field>/g 
+noremap <F8> :%s/\v(.*)/\r<item id="\1">\r\t<rank>changeMe<\/rank>\r<\/item>/g
+"打开vimrc                          
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>                           
+                          
+"重读vimrc                                   
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+colorscheme evening "配色方案
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+" :sv 纵向打开一个文件
+" :vs 横向打开一个文件
+
+"当前单词增加""
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+"引号将你 高亮选中 的文本包裹
+vnoremap <leader>" <esc><esc>`<i"<esc>`>a"
+
+"jk代替<esc>
+inoremap jk <esc>
+
+"缩写
+iabbrev @@ apache3@foxmail.com
+
+set fileencodings=utf-8,gbk,cp936,gb18030,big5,euc-jp,euc-kr,latin1,ucs-bom,ucs
+"set encoding=utf-8
+"set langmenu=zh_CN.UTF-8
+"language message zh_CN.UTF-8
+set fencs=utf-8,gbk,cp936,gb18030,gb2312,ucs-bom
+"set enc=utf-8
+set fenc=utf-8 "无论所打开文件是否为utf-8编码，保存时都会强制保存为utf-8格式
+"set cindent  "自动对齐
+
+set shiftwidth=4 
+set tabstop=4 "让一个tab等于4个空格
+set expandtab
+set hlsearch "高亮显示结果
+set incsearch "在输入要搜索的文字时，vim会实时匹配
+
+set foldmethod=indent
+set foldlevel=99
+ 
+" press space to fold/unfold code
+nnoremap <space> za
+vnoremap <space> zf
+                                
+set laststatus=2 " Always display the statusline in all windows
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+
+hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white 
+
+" vundle
+set nocompatible              " be iMproved, required
+"filetype off                  " required
+"set rtp+=~/.vim/bundle/Vundle.vim
+"set rtp+=~/.vim/bundle/*
+"call vundle#begin()
+" 此处规定Vundle的路径  
+set rtp+=$VIM/vimfiles/bundle/vundle/  
+call vundle#rc('$VIM/vimfiles/bundle/')  
+
+Plugin 'VundleVim/Vundle.vim'
+    "Plugin 'kevinw/pyflakes-vim'
+    filetype plugin indent on
+
+Plugin 'fs111/pydoc.vim' 
+    "在vim中查找python文档
+
+Plugin 'davidhalter/jedi-vim'
+    "提供python 代码提示，shit+k提供__doc__展示功能
+    let g:jedi#goto_command = "<leader>d"
+    let g:jedi#goto_assignments_command = "<leader>g"
+    let g:jedi#goto_definitions_command = ""
+    let g:jedi#documentation_command = "K"
+    let g:jedi#usages_command = "<leader>n"
+    let g:jedi#completions_command = "<C-Space>"
+    let g:jedi#rename_command = "<leader>r"
+
+Plugin 'vim-scripts/DrawIt'
+    " 画图
+    " \di to start DrawIt and
+    " \ds to stop  DrawIt.
+    
+Plugin 'scrooloose/nerdtree'
+"Plugin 'Xuyuanp/nerdtree-git-plugin'
+    " nerdtree
+    "let g:NERDTreeIndicatorMapCustom = {
+    "\ "Modified"  : "?",
+    "\ "Staged"    : "?",
+    "\ "Untracked" : "?",
+    "\ "Renamed"   : "?",
+    "\ "Unmerged"  : "═",
+    "\ "Deleted"   : "?",
+    "\ "Dirty"     : "?",
+    "\ "Clean"     : "??",
+    "\ "Unknown"   : "?"
+    "\ }
+    "let NERDTreeWinPos='right'
+    let NERDTreeWinSize=30
+    map <F2> :NERDTreeToggle<CR>
+Bundle 'bling/vim-airline'
+    set laststatus=2
+
+Plugin 's-h/AuthorInfo'
+    "自动生成/更新文件作者信息
+    let g:vimrc_author='jianghao'
+    let g:vimrc_email='mail@jianghao.tech'
+    let g:vimrc_homepage='http://www.github.com/s-h'
+    nmap <F4> :AuthorInfoDetect<cr>
+    
+    
+Plugin 'kien/ctrlp.vim'
+    "超级搜索 ctrl + p
+    
+Plugin 'jnurmine/Zenburn'
+    "配色
+
+Plugin 'altercation/vim-colors-solarized' "配色
+    if has('gui_running')
+        set background=dark
+        colorscheme solarized
+        "set guifont=DejaVu\ Sans\ mono\ 15 
+        "set guifont=Courier:h12:cANSI
+        set guifont=Consolas:h12:cANSI
+    else
+        colorscheme zenburn
+    endif
+"Bundle 'Valloric/YouCompleteMe' 
+"    g:ycm_global_ycm_extra_conf='D:\.ycm_extra_conf.py'
+Bundle 'scrooloose/nerdcommenter'
+    "快捷键 \cc 注释
+    "       \cu 取消注释
+    
+Plugin 'othree/xml.vim'
+    "xml/html标签自动闭合
+
+Plugin 'Shougo/neocomplcache.vim'
+    "自动补全
+    "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+    " Disable AutoComplPop.
+    let g:acp_enableAtStartup = 0
+    " Use neocomplcache.
+    let g:neocomplcache_enable_at_startup = 1
+    " Use smartcase.
+    let g:neocomplcache_enable_smart_case = 1
+    " Set minimum syntax keyword length.
+    let g:neocomplcache_min_syntax_length = 3
+    let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+    " Enable heavy features.
+    " Use camel case completion.
+    "let g:neocomplcache_enable_camel_case_completion = 1
+    " Use underbar completion.
+    "let g:neocomplcache_enable_underbar_completion = 1
+
+    " Define dictionary.
+    let g:neocomplcache_dictionary_filetype_lists = {
+        \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
+
+    " Define keyword.
+    if !exists('g:neocomplcache_keyword_patterns')
+        let g:neocomplcache_keyword_patterns = {}
+    endif
+    let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+    " Plugin key-mappings.
+    inoremap <expr><C-g>     neocomplcache#undo_completion()
+    inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+      return neocomplcache#smart_close_popup() . "\<CR>"
+      " For no inserting <CR> key.
+      "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+    endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-y>  neocomplcache#close_popup()
+    inoremap <expr><C-e>  neocomplcache#cancel_popup()
+    " Close popup by <Space>.
+    "inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+
+    " For cursor moving in insert mode(Not recommended)
+    "inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
+    "inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+    "inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
+    "inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
+    " Or set this.
+    "let g:neocomplcache_enable_cursor_hold_i = 1
+    " Or set this.
+    "let g:neocomplcache_enable_insert_char_pre = 1
+
+    " AutoComplPop like behavior.
+    "let g:neocomplcache_enable_auto_select = 1
+
+    " Shell like behavior(not recommended).
+    "set completeopt+=longest
+    "let g:neocomplcache_enable_auto_select = 1
+    "let g:neocomplcache_disable_auto_complete = 1
+    "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Enable heavy omni completion.
+    if !exists('g:neocomplcache_force_omni_patterns')
+      let g:neocomplcache_force_omni_patterns = {}
+    endif
+    let g:neocomplcache_force_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+    " For perlomni.vim setting.
+    " https://github.com/c9s/perlomni.vim
+    let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+Plugin 'hotoo/pangu.vim'
+    "盘古插件用于自动格式化、标准化中文排版
+    autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()
+    "功能
+    "
+    "中英文字符间增加一个半角空白。
+    "中文前后的半角标点转成全角标点。
+    "全角英文、数字转成半角字符。
+    "连续的句号自动转省略号。
+    "感叹号、问号最多允许连续重复 3 次。
+    "其他中文标点符号不允许重复出现。
+
+Plugin 's-h/conque-term'
+    "在vim中打开终端
+    ":ConqueTerm bash
+    ":ConqueTerm mysql -h localhost -u joe -p sock_collection
+    ":ConqueTerm Powershell.exe
+    ":ConqueTerm C:\Python27\python.exe
+    ":ConqueTermSplit <command>
+    ":ConqueTermVSplit <command>
+    ":ConqueTermTab <command>
+    
+Plugin 'octol/vim-cpp-enhanced-highlight'
+    "c/c++ 语法高亮
+
+Plugin 'mhinz/vim-signify'
+    " Show a diff using Vim its sign column.
+    let g:signify_vcs_list = [ 'git', 'hg' ]
+    " mappings to jump to changed blocks
+    nmap <leader>sn <plug>(signify-next-hunk)
+    nmap <leader>sp <plug>(signify-prev-hunk)
+    " nicer colors
+    highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
+    highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
+    highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
+    highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
+    highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
+    highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+
+Plugin 'wakatime/vim-wakatime'
+    "wakatime.com 统计工具
+
+Plugin 'tpope/vim-surround'
+    "普通模式：
+    "  ds(        删除括号   
+    "  cs"(       替换括号
+    "  cS"(       替换括号，括号文本新作一行
+    "  ys w [     添加括号
+    "  ys 2w [     添加括号
+    "  yss (       整行添加括号
+    "  ySS (       整行添加括号，文本新一行
+    "
+    "  可是模式
+    "  S           选中的括起来
+    "  gS           选中的括起来，文本新一行
+    "
+Plugin 'Yggdroot/indentLine'
+    "  显示缩进垂直线
+    "  :IndentLinesToggle toggles lines on and off.
+Plugin 's-h/solidot'
